@@ -1,6 +1,5 @@
 const sequelize = require('../db');
 const {DataTypes} = require('sequelize');
-const { model } = require('../db');
 
 
 const StorageRack = sequelize.define('storageRack', {
@@ -42,7 +41,7 @@ const Brand = sequelize.define('brand', {
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
 })
 
-const TypeBrand = sequelize.define('type_brand', {
+const TypeBrand = sequelize.define('typebrand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
@@ -53,7 +52,7 @@ StorageShelf.belongsTo(StorageRack)
 StorageShelf.hasMany(Item)
 Item.belongsTo(StorageShelf)
 
-Item.hasMany(ItemInfo)
+Item.hasMany(ItemInfo, {as: 'info'})
 ItemInfo.belongsTo(Item)
 
 Type.hasMany(Item)

@@ -1,5 +1,6 @@
-const {Brand} = require('../models/models')
+const {Brand, Item} = require('../models/models')
 const ApiError = require('../error/ApiError')
+const { where } = require('sequelize')
 
 class BrandController {
     async create(req, res) {
@@ -8,7 +9,14 @@ class BrandController {
         return res.json(brand)
     }
     async getAll(req, res) {
-        const brands = await Brand.findAll()
+        let {name} = req.query
+
+        let brands;
+
+        brands = await Brand.findAndCountAll({
+            where: {name}
+        })
+        
         return res.json(brands)
     }
 }
